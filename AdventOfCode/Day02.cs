@@ -23,8 +23,6 @@ public class Day02 : BaseDay
 
         var result = 0;
 
-        Dictionary<int, Tuple<int, int, int>> games = new();
-
         foreach (string line in _input)
         {
             var split = line.Split(": ");
@@ -34,14 +32,6 @@ public class Day02 : BaseDay
             var red = reRed.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
             var green = reGreen.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
             var blue = reBlue.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
-            
-            games.Add(gameNumber, new Tuple<int, int, int>(red, green, blue));
-        }
-
-        foreach(var game in games)
-        {
-            var gameNumber = game.Key;
-            var (red, green, blue) = game.Value;
 
             if (red <= 12 && green <= 13 && blue <= 14)
                 result += gameNumber;
@@ -58,28 +48,15 @@ public class Day02 : BaseDay
 
         var result = 0;
 
-        Dictionary<int, Tuple<int, int, int>> games = new();
-
         foreach (string line in _input)
         {
-            var split = line.Split(": ");
-            int gameNumber = int.Parse(split[0].Split(' ')[1]);
-            var rounds = split[1];
-
-            var red = reRed.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
-            var green = reGreen.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
-            var blue = reBlue.Matches(rounds).Select(m => int.Parse(m.Groups[1].Value)).Max();
-
-            games.Add(gameNumber, new Tuple<int, int, int>(red, green, blue));
-        }
-
-        foreach (var game in games)
-        {
-            var (red, green, blue) = game.Value;
+            var red = reRed.Matches(line).Select(m => int.Parse(m.Groups[1].Value)).Max();
+            var green = reGreen.Matches(line).Select(m => int.Parse(m.Groups[1].Value)).Max();
+            var blue = reBlue.Matches(line).Select(m => int.Parse(m.Groups[1].Value)).Max();
 
             result += red * green * blue;
         }
-        
+
         return result;
     }
 }
